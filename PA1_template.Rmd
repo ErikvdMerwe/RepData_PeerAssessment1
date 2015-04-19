@@ -4,8 +4,6 @@ author: "Erik van der Merwe"
 date: "Sunday, April 19, 2015"
 output: html_document
 ---
-# Reproducible Research - Peer Assignment 1
-
 The following document was compiled for the completion of Peer Assignment 1 in the Reproducible Reseach module for the completion of the Data Science course provided by the John Hopkins University or Coursera
 
 ## Loading and Preprocessing the Data
@@ -17,12 +15,6 @@ The following steps were taken to load the Fitbit data to R.
   download.file("http://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip", temp)
   activity_data <- read.csv(unz(temp, "activity.csv"))
   unlink(temp)
-```
-
-Further data manipulation were done as indicated below
-
-```{r Data Manipulation}
-
 ```
 
 ## Calculating the Mean Number of Daily Steps Taken
@@ -42,3 +34,14 @@ The mean and median values were calculated as follow:
 ```
 Mean = `r as.character(step_mean)`
 Median = `r as.character(step_median)`
+
+## Average Daily Activity Patterns
+
+The following code was used to generate a diagram showing the average number of steps taken per day during each 5-minute time interval.
+
+```{r Daily Steps per Time Interval}
+  library(plyr)
+  library(ggplot2)
+  plotdata2 <- ddply(activity_data, "interval", summarise, msteps = mean(steps, na.rm = TRUE))
+  ggplot(plotdata2, aes(x = interval, y = msteps)) + geom_line(stat = "identity") + xlab("Time Interval") + ylab("Steps Taken (Mean)") + ggtitle("Mean Steps Taken per Daily Time Interval")
+```

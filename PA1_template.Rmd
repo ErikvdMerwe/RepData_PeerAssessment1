@@ -1,25 +1,44 @@
 ---
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
+title: "Reproducible Research Peer Assignment 1"
+author: "Erik van der Merwe"
+date: "Sunday, April 19, 2015"
+output: html_document
 ---
+# Reproducible Research - Peer Assignment 1
 
+The following document was compiled for the completion of Peer Assignment 1 in the Reproducible Reseach module for the completion of the Data Science course provided by the John Hopkins University or Coursera
 
-## Loading and preprocessing the data
+## Loading and Preprocessing the Data
 
+The following steps were taken to load the Fitbit data to R.
 
+```{r Getting the Data}
+  temp <- tempfile()
+  download.file("http://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip", temp)
+  activity_data <- read.csv(unz(temp, "activity.csv"))
+  unlink(temp)
+```
 
-## What is mean total number of steps taken per day?
+Further data manipulation were done as indicated below
 
+```{r Data Manipulation}
 
+```
 
-## What is the average daily activity pattern?
+## Calculating the Mean Number of Daily Steps Taken
 
+The amount of steps recorded on a daily basis can be seen in the bar plot derived as below.
 
+```{r Daily Step Histogran}
+  plotdata <- tapply(activity_data$steps, activity_data$date, FUN = sum, rm.na = TRUE)
+  barplot(plotdata, xlab = "Date", ylab = "No. of Steps", main = "Total Steps Recorder by the FitBit device per Day")
+```
 
-## Imputing missing values
+The mean and median values were calculated as follow:
 
-
-
-## Are there differences in activity patterns between weekdays and weekends?
+```{r Daily Step Mean and Median}
+  step_mean <- round(mean(plotdata, na.rm = TRUE), 2)
+  step_median <- median(plotdata, na.rm = TRUE)
+```
+Mean = `r as.character(step_mean)`
+Median = `r as.character(step_median)`

@@ -45,3 +45,11 @@ The following code was used to generate a diagram showing the average number of 
   plotdata2 <- ddply(activity_data, "interval", summarise, msteps = mean(steps, na.rm = TRUE))
   ggplot(plotdata2, aes(x = interval, y = msteps)) + geom_line(stat = "identity") + xlab("Time Interval") + ylab("Steps Taken (Mean)") + ggtitle("Mean Steps Taken per Daily Time Interval")
 ```
+
+The time interval with the highest mean-value for steps were determined as follow:
+
+```{r Time Interval for Most Steps on Average}
+  row <- which(plotdata2$msteps == max(plotdata2$msteps)) %% nrow(plotdata2)
+```
+
+Time Interval with most steps determined on average was determined as: `r plotdata2[row,1]`
